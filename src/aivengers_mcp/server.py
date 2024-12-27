@@ -21,36 +21,36 @@ async def handle_list_tools() -> list[types.Tool]:
     """
     return [
         types.Tool(
-            name="search-actions",
-            description="Search for actions",
+            name="search-tools",
+            description="Search for tools. The tools cover a wide range of domains include data source, API, SDK, etc. Try searching whenever you need to use a tool.",
             inputSchema={
                 "type": "object",
                 "properties": {
                     "query": {
                         "type": "string",
-                        "description": "The query to search for actions, you can describe what tools you want to use"
+                        "description": "The query to search for tools, you can describe what you want to do or what tools you want to use"
                     },
                     "limit": {
                         "type": "number",
-                        "description": "The maximum number of actions to return, must be between 1 and 100, default is 10"
+                        "description": "The maximum number of tools to return, must be between 1 and 100, default is 10"
                     }
                 },
                 "required": ["query"],
             },
         ),
         types.Tool(
-            name="call-action",
-            description="Call an action",
+            name="call-tool",
+            description="Call a tool",
             inputSchema={
                 "type": "object",
                 "properties": {
                     "action": {
                         "type": "string",
-                        "description": "The exact action you want to call in the search-actions result"
+                        "description": "The exact action you want to call in the search-tools result"
                     },
                     "payload": {
                         "type": "object",
-                        "description": "Action payload, based on the payload schema in the search-actions result"
+                        "description": "Action payload, based on the payload schema in the search-tools result"
                     },
                 },
                 "required": ["action"],
@@ -66,7 +66,7 @@ async def handle_call_tool(
     Handle tool execution requests.
     Tools can modify server state and notify clients of changes.
     """
-    if name == "search-actions":
+    if name == "search-tools":
         query = arguments.get("query")
         
         if not query:
@@ -94,7 +94,7 @@ async def handle_call_tool(
                         text=f"Error searching actions: {str(e)}"
                     )
                 ]
-    elif name == "call-action":
+    elif name == "call-tool":
         action = arguments.get("action")
         payload = arguments.get("payload")
 

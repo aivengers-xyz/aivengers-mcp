@@ -7,8 +7,8 @@ Dynamically search and call tools in AIvengers
 ### Tools
 
 The server implements 2 tools:
-- search-actions: Intent based search for dynamic actions
-- call-action: Calls a dynamic action
+- search-tools: Intent based search for dynamic tools
+- call-tool: Calls a dynamic action (tool)
 
 ## Configuration
 
