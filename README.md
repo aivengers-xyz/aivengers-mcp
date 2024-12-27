@@ -20,6 +20,10 @@ You can get your API key for free at [AGIverse](https://app.agiverse.io/).
 
 ### Install
 
+#### uv
+
+You need to install `uv` to run the server, see [Instaling uv](https://docs.astral.sh/uv/getting-started/installation/) for more details.
+
 #### Claude Desktop
 
 On MacOS: `~/Library/Application\ Support/Claude/claude_desktop_config.json`
