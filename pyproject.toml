@@ -1,0 +1,20 @@
+[project]
+name = "aivengers-mcp"
+version = "0.1.0"
+description = "Dynamically search and call tools in AIvengers"
+readme = "README.md"
+requires-python = ">=3.12"
+dependencies = [
+    "mcp>=1.1.2",
+    "aiohttp>=3.11.11"
+]
+[[project.authors]]
+name = "Yilun"
+email = "yilun@agiverse.io"
+
+[build-system]
+requires = [ "hatchling",]
+build-backend = "hatchling.build"
+
+[project.scripts]
+aivengers-mcp = "aivengers_mcp:main"
