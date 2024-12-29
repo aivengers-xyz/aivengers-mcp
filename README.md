@@ -7,8 +7,8 @@ Dynamically search and call tools in AIvengers
 ### Tools
 
 The server implements 2 tools:
-- search-tools: Intent based search for dynamic tools
-- call-tool: Calls a dynamic action (tool)
+- search_tools: Intent based search for dynamic tools
+- call_tool: Calls a dynamic action (tool)
 
 ## Configuration
 
@@ -30,16 +30,18 @@ On MacOS: `~/Library/Application\ Support/Claude/claude_desktop_config.json`
 On Windows: `%APPDATA%/Claude/claude_desktop_config.json`
 
 ```json
-"mcpServers": {
-  "aivengers-mcp": {
-    "command": "uvx",
-    "args": [
-      "--from",
-      "git+https://github.com/agiverse/aivengers-mcp",
-      "aivengers-mcp"
-    ],
-    "env": {
-      "AGIVERSE_API_KEY": ""
+{
+  "mcpServers": {
+    "aivengers-mcp": {
+      "command": "uvx",
+      "args": [
+        "--from",
+        "git+https://github.com/agiverse/aivengers-mcp",
+        "aivengers-mcp"
+      ],
+      "env": {
+        "AGIVERSE_API_KEY": ""
+      }
     }
   }
 }

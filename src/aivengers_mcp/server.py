@@ -21,7 +21,7 @@ async def handle_list_tools() -> list[types.Tool]:
     """
     return [
         types.Tool(
-            name="search-tools",
+            name="search_tools",
             description="Search for tools. The tools cover a wide range of domains include data source, API, SDK, etc. Try searching whenever you need to use a tool.",
             inputSchema={
                 "type": "object",
@@ -32,28 +32,29 @@ async def handle_list_tools() -> list[types.Tool]:
                     },
                     "limit": {
                         "type": "number",
-                        "description": "The maximum number of tools to return, must be between 1 and 100, default is 10"
+                        "description": "The maximum number of tools to return, must be between 1 and 100, default is 10, recommend at least 10"
                     }
                 },
                 "required": ["query"],
             },
         ),
         types.Tool(
-            name="call-tool",
+            name="call_tool",
             description="Call a tool",
             inputSchema={
                 "type": "object",
                 "properties": {
                     "action": {
                         "type": "string",
-                        "description": "The exact action you want to call in the search-tools result"
+                        "description": "The exact action you want to call in the search_tools result"
                     },
                     "payload": {
                         "type": "object",
-                        "description": "Action payload, based on the payload schema in the search-tools result"
+                        "description": "Action payload, based on the payload schema in the search_tools result",
+                        "properties": {"_": {"type": "number"}}, # to pass validation (e.g. Gemini)
                     },
                 },
-                "required": ["action"],
+                "required": ["action", "payload"],
             },
         ),
     ]
@@ -66,7 +67,7 @@ async def handle_call_tool(
     Handle tool execution requests.
     Tools can modify server state and notify clients of changes.
     """
-    if name == "search-tools":
+    if name == "search_tools":
         query = arguments.get("query")
         
         if not query:
@@ -84,7 +85,7 @@ async def handle_call_tool(
                     return [
                         types.TextContent(
                             type="text", 
-                            text=json.dumps(results, indent=2)
+                            text=json.dumps(results)
                         )
                     ]
             except Exception as e:
@@ -94,9 +95,9 @@ async def handle_call_tool(
                         text=f"Error searching actions: {str(e)}"
                     )
                 ]
-    elif name == "call-tool":
+    elif name == "call_tool":
         action = arguments.get("action")
-        payload = arguments.get("payload")
+        payload = arguments.get("payload", {})
 
         if not action:
             raise ValueError("Missing action")
@@ -106,9 +107,8 @@ async def handle_call_tool(
                 data = {
                     "apiKey": API_KEY,
                     "action": action,
+                    "payload": payload,
                 }
-                if payload:
-                    data["payload"] = payload
                 async with session.post(
                     f"{BACKEND_URL}/api/v1/actions/call",
                     json=data,
@@ -119,7 +119,7 @@ async def handle_call_tool(
                     return [
                         types.TextContent(
                             type="text",
-                            text=json.dumps(result, indent=2)
+                            text=json.dumps(result)
                         )
                     ]
             except Exception as e:
@@ -146,3 +146,6 @@ async def main():
                 ),
             ),
         )
+
+if __name__ == "__main__":
+    asyncio.run(main())
