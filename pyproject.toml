@@ -3,7 +3,7 @@ name = "aivengers-mcp"
 version = "0.1.0"
 description = "Dynamically search and call tools in AIvengers"
 readme = "README.md"
-requires-python = ">=3.12"
+requires-python = ">=3.11"
 dependencies = [
     "mcp>=1.1.2",
     "aiohttp>=3.11.11"

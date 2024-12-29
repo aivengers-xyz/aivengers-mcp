@@ -27,6 +27,7 @@ You need to install `uv` to run the server, see [Instaling uv](https://docs.astr
 #### Claude Desktop
 
 On MacOS: `~/Library/Application\ Support/Claude/claude_desktop_config.json`
+
 On Windows: `%APPDATA%/Claude/claude_desktop_config.json`
 
 ```json
