@@ -47,12 +47,11 @@ async def handle_list_tools() -> list[types.Tool]:
                 "properties": {
                     "action": {
                         "type": "string",
-                        "description": "The exact action you want to call in the search_tools result"
+                        "description": "The exact action you want to call in the search_tools result."
                     },
                     "payload": {
-                        "type": "object",
-                        "description": "Action payload, based on the payload schema in the search_tools result",
-                        "properties": {"_": {"type": "number"}}, # to pass validation (e.g. Gemini)
+                        "type": "string",
+                        "description": "Action payload, based on the payload schema in the search_tools result. You can pass either the json object directly or json encoded string of the object.",
                     },
                     "payment": {
                         "type": "number",
