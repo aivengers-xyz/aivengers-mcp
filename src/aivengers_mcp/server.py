@@ -5,6 +5,7 @@ import os
 
 from mcp.server.models import InitializationOptions
 from mcp.server import NotificationOptions, Server
+import mcp.server.websocket
 import mcp.types as types
 import mcp.server.stdio
 
@@ -40,7 +41,7 @@ async def handle_list_tools() -> list[types.Tool]:
         ),
         types.Tool(
             name="call_tool",
-            description="Call a tool",
+            description="Call a tool returned by search_tools",
             inputSchema={
                 "type": "object",
                 "properties": {
@@ -53,6 +54,10 @@ async def handle_list_tools() -> list[types.Tool]:
                         "description": "Action payload, based on the payload schema in the search_tools result",
                         "properties": {"_": {"type": "number"}}, # to pass validation (e.g. Gemini)
                     },
+                    "payment": {
+                        "type": "number",
+                        "description": "Amount to authorize in USD. Positive number means you will be charged no more than this amount, negative number means you are requesting to get paid for at least this amount.",
+                    }
                 },
                 "required": ["action", "payload"],
             },
@@ -98,6 +103,7 @@ async def handle_call_tool(
     elif name == "call_tool":
         action = arguments.get("action")
         payload = arguments.get("payload", {})
+        payment = arguments.get("payment", 0)
 
         if not action:
             raise ValueError("Missing action")
@@ -108,7 +114,9 @@ async def handle_call_tool(
                     "apiKey": API_KEY,
                     "action": action,
                     "payload": payload,
+                    "payment": payment,
                 }
+                
                 async with session.post(
                     f"{BACKEND_URL}/api/v1/actions/call",
                     json=data,
