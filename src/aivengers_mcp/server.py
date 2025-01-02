@@ -82,7 +82,7 @@ async def handle_call_tool(
                 async with session.get(
                     f"{BACKEND_URL}/api/v1/actions/search",
                     params=arguments,
-                    timeout=aiohttp.ClientTimeout(total=10),
+                    timeout=aiohttp.ClientTimeout(total=30),
                 ) as response:
                     response.raise_for_status()
                     results = await response.json()
@@ -119,7 +119,7 @@ async def handle_call_tool(
                 async with session.post(
                     f"{BACKEND_URL}/api/v1/actions/call",
                     json=data,
-                    timeout=aiohttp.ClientTimeout(total=60)
+                    timeout=aiohttp.ClientTimeout(total=100)
                 ) as response:
                     response.raise_for_status()
                     result = await response.json()

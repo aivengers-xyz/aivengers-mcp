@@ -37,7 +37,7 @@ On Windows: `%APPDATA%/Claude/claude_desktop_config.json`
       "command": "uvx",
       "args": [
         "--from",
-        "git+https://github.com/agiverse/aivengers-mcp",
+        "git+https://github.com/aivengers-xyz/aivengers-mcp",
         "aivengers-mcp"
       ],
       "env": {
