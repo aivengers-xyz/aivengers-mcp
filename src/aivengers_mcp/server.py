@@ -119,7 +119,7 @@ async def handle_call_tool(
                 async with session.post(
                     f"{BACKEND_URL}/api/v1/actions/call",
                     json=data,
-                    timeout=aiohttp.ClientTimeout(total=100)
+                    timeout=aiohttp.ClientTimeout(total=50)
                 ) as response:
                     response.raise_for_status()
                     result = await response.json()
